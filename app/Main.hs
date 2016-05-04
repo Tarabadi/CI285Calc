@@ -43,6 +43,8 @@ import           Yesod
 --create sqlite database with usernames, passwords, if logged in doing an equation will write to the
 --"history" section of the table
 
+--ask if use will be entirely terminal or through a browser (html forms for logging in, etc)
+
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
 [persistLowerCase|
 
