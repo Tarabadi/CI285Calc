@@ -1,8 +1,14 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE QuasiQuotes       #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE TemplateHaskell   #-}
-{-# LANGUAGE TypeFamilies      #-}
+{-# LANGUAGE OverloadedStrings          #-}
+{-# LANGUAGE QuasiQuotes                #-}
+{-# LANGUAGE RecordWildCards            #-}
+{-# LANGUAGE TemplateHaskell            #-}
+{-# LANGUAGE TypeFamilies               #-}
+--{-# LANGUAGE GADTs                      #-}
+--{-# LANGUAGE FlexibleContexts           #-}
+--{-# LANGUAGE MultiParamTypeClasses      #-}
+--{-# LANGUAGE DeriveDataTypeable         #-}
+--{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+--{-# LANGUAGE ViewPatterns               #-}
 import           Prelude                (IO)
 import           Data.Aeson
 import           GHC.Generics
@@ -10,12 +16,45 @@ import           ClassyPrelude
 import           Data.Text (Text)
 import           Yesod
 
+
+--import           Yesod.Auth
+--import           Yesod.Form.Nic (YesodNic, nicHtmlField)
+--import           Yesod.Auth.BrowserId (authBrowserId, def)
+--import           Data.Text (Text)
+--import           Network.HTTP.Client.TLS (tlsManagerSettings)
+--import           Network.HTTP.Conduit (Manager, newManager)
+--import           Database.Persist.Sqlite
+--                 ( ConnectionPool, SqlBackend, runSqlPool, runMigration
+--                 , createSqlitePool, runSqlPersistMPool
+--                 )
+--import           Data.Time (UTCTime, getCurrentTime)
+--import           Control.Applicative ((<$>), (<*>), pure)
+--import           Data.Typeable (Typeable)
+--import           Control.Monad.Logger (runStdoutLoggingT)
+
 --initial example (getHomeR) from http://www.yesodweb.com/book/restful-content
 
---authentication examples from http://www.yesodweb.com/book/authentication-and-authorization
+--authentication examples at http://www.yesodweb.com/book/authentication-and-authorization
 --yesod account authentication - https://hackage.haskell.org/package/yesod-auth-account-1.4.2/docs/Yesod-Auth-Account.html
 --yesod blog example - http://www.yesodweb.com/book/blog-example-advanced
+--using http://www.yesodweb.com/book/authentication-and-authorization exampele of google api to figure out auth
 
+--look at https://hackage.haskell.org/package/yesod-auth-hashdb-1.5.1/docs/Yesod-Auth-HashDB.html
+--create sqlite database with usernames, passwords, if logged in doing an equation will write to the
+--"history" section of the table
+
+share [mkPersist sqlSettings, mkMigrate "migrateAll"]
+[persistLowerCase|
+
+User
+    email Text
+    UniqueUser email
+    deriving Typeable
+
+Calculation
+    equation Text
+    answer Text
+|]
 
 
 data Person = Person
@@ -29,10 +68,16 @@ instance ToJSON Person where
         , "age"  .= age
         ]
 
+--added connPool/httpManager
 data App = App
+    { connPool    :: ConnectionPool
+    , httpManager :: Manager
+    }
+
 
 mkYesod "App" [parseRoutes|
 /test           TestR GET
+/auth           AuthR Auth getAuth
 /add/#Int/#Int  AddR  GET
 /sub/#Int/#Int  SubR  GET
 /mult/#Int/#Int MultR GET
