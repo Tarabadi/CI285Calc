@@ -12,6 +12,12 @@ import           Yesod
 
 --initial example (getHomeR) from http://www.yesodweb.com/book/restful-content
 
+--authentication examples from http://www.yesodweb.com/book/authentication-and-authorization
+--yesod account authentication - https://hackage.haskell.org/package/yesod-auth-account-1.4.2/docs/Yesod-Auth-Account.html
+--yesod blog example - http://www.yesodweb.com/book/blog-example-advanced
+
+
+
 data Person = Person
     { name :: Text
     , age  :: Int
@@ -26,7 +32,7 @@ instance ToJSON Person where
 data App = App
 
 mkYesod "App" [parseRoutes|
-/test           HomeR GET
+/test           TestR GET
 /add/#Int/#Int  AddR  GET
 /sub/#Int/#Int  SubR  GET
 /mult/#Int/#Int MultR GET
@@ -44,6 +50,14 @@ getHomeR = selectRep $ do
     provideJson person
   where
     person@Person {..} = Person "Johnny" 35
+
+getTestR :: Handler TypedContent
+getTestR = selectRep $ do
+    provideRep $ return
+        [shamlet|
+            <p>Connection Successful!
+        |]
+
 
 getAddR :: Int -> Int -> Handler TypedContent
 getAddR x y = selectRep $ do
@@ -84,6 +98,23 @@ getDivR x y = selectRep $ do
     provideJson ans
   where
     ans = x `div` y
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 main :: IO ()
 main = warp 3000 App
