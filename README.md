@@ -16,7 +16,7 @@ $ stack exec CI285Calc-exe
 ```
 will run the project, hosting the calculator at port 3000 of **localhost**. Another cmd/terminal/preffered prompt has to opened to use the calculator.
 
-With the second prompt, a connection test can be run to ensure the calculator is being hosted and you can connect to it:
+With the second prompt, a connection test can be run to ensure the calculator is being hosted and you can connect to it. If everything is okay, it should look like:
 ```
 $ curl localhost:3000/test
 <p>Connection Successful!</p>
