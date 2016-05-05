@@ -19,4 +19,5 @@ will run the project, hosting the calculator at port 3000 of **localhost**. Anot
 With the second prompt, a connection test can be run to ensure the calculator is being hosted and you can connect to it:
 ```
 $ curl localhost:3000/test
+<p>Connection Successful!</p>
 ```
