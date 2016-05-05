@@ -44,7 +44,7 @@ import           Yesod
 --"history" section of the table
 
 --ask if use will be entirely terminal or through a browser (html forms for logging in, etc)
-
+{- authentication stuff, not working rn
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
 [persistLowerCase|
 
@@ -57,8 +57,13 @@ Calculation
     equation Text
     answer Text
 |]
+--under app
+    { connPool    :: ConnectionPool
+    , httpManager :: Manager
+    }
 
-
+/auth           AuthR Auth getAuth
+-}
 data Person = Person
     { name :: Text
     , age  :: Int
@@ -70,16 +75,13 @@ instance ToJSON Person where
         , "age"  .= age
         ]
 
---added connPool/httpManager
+
 data App = App
-    { connPool    :: ConnectionPool
-    , httpManager :: Manager
-    }
+
 
 
 mkYesod "App" [parseRoutes|
 /test           TestR GET
-/auth           AuthR Auth getAuth
 /add/#Int/#Int  AddR  GET
 /sub/#Int/#Int  SubR  GET
 /mult/#Int/#Int MultR GET
@@ -135,7 +137,7 @@ getMultR x y = selectRep $ do
     provideJson ans
   where
     ans = x * y
-
+--done to 8 sf by default
 getDivR :: Int -> Int -> Handler TypedContent
 getDivR x y = selectRep $ do
     provideRep $ return
@@ -144,16 +146,10 @@ getDivR x y = selectRep $ do
         |]
     provideJson ans
   where
-    ans = x `div` y
+    ans = divCalc x y
 
-
-
-
-
-
-
-
-
+divCalc :: Int -> Int -> Float
+divCalc x y = (fromIntegral x) / (fromIntegral y)
 
 
 

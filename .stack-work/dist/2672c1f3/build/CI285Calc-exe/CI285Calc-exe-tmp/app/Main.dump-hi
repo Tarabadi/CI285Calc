@@ -1,13 +1,13 @@
 
 ==================== FINAL INTERFACE ====================
-2016-05-04 02:30:49.5214476 UTC
+2016-05-05 13:29:56.2411879 UTC
 
 interface main@main:Main [family instance module] 7103
   interface hash: 774d8b729860f19d51168fa20c8a49f9
   ABI hash: 611be62a7df07937d9d9303ea68b46f8
   export-list hash: d04d2ca07ea918a472a12684fe0def63
   orphan hash: ca65b044a4730d41ad4392963bb443f2
-  flag hash: 0c7d4f074b4d1af3f6cc479a438484f1
+  flag hash: ea579b5e024146bd7762b32a97a354a8
   sig of: Nothing
   used TH splices: True
   where
