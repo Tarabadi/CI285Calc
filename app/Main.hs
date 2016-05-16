@@ -37,7 +37,7 @@ import           Yesod
 --authentication examples at http://www.yesodweb.com/book/authentication-and-authorization
 --yesod account authentication - https://hackage.haskell.org/package/yesod-auth-account-1.4.2/docs/Yesod-Auth-Account.html
 --yesod blog example - http://www.yesodweb.com/book/blog-example-advanced
---using http://www.yesodweb.com/book/authentication-and-authorization exampele of google api to figure out auth
+--using http://www.yesodweb.com/book/authentication-and-authorization example of google api to figure out auth
 
 --look at https://hackage.haskell.org/package/yesod-auth-hashdb-1.5.1/docs/Yesod-Auth-HashDB.html
 --create sqlite database with usernames, passwords, if logged in doing an equation will write to the
