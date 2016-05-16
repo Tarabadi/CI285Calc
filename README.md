@@ -28,3 +28,6 @@ $ curl localhost:3000/mult/7/12
 <p>84</p>
 ```
 **NB**: `div` returns the answer to 8 significant figures
+
+####3rd Party Code
+Snippets of code were obtained from http://www.yesodweb.com/book/restful-content - specifically from the 'JSON conveniences' section - as a base to start from
