@@ -153,13 +153,5 @@ getDivR x y = selectRep $ do
 divCalc :: Int -> Int -> Float
 divCalc x y = (fromIntegral x) / (fromIntegral y)
 
-
-
-
-
-
-
-
-
 main :: IO ()
 main = warp 3000 App
