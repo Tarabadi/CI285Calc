@@ -43,19 +43,21 @@ import           Yesod
 --create sqlite database with usernames, passwords, if logged in doing an equation will write to the
 --"history" section of the table
 
---ask if use will be entirely terminal or through a browser (html forms for logging in, etc)
+
 {- authentication stuff, not working rn
 share [mkPersist sqlSettings, mkMigrate "migrateAll"]
 [persistLowerCase|
 
 User
-    email Text
-    UniqueUser email
+    username Text
+    password Text
     deriving Typeable
 
 Calculation
+    user UserId
     equation Text
     answer Text
+    deriving Show
 |]
 --under app
     { connPool    :: ConnectionPool
